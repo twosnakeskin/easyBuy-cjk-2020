@@ -42,8 +42,14 @@
 
     <script type="text/javascript" src="${ctx}/front/js/lrscroll_1.js"></script>
 
+    <%
+        Object obj = request.getAttribute("categoryList");
+        if (obj==null){
+            response.sendRedirect(request.getContextPath()+"/home?action=index");
+        }
+    %>
 
-    <title>尤洪</title>
+    <title>易买网</title>
 </head>
 <body>
 <!--Begin Header Begin-->
@@ -126,7 +132,16 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-        	<span class="fl">你好，请<a href="Login.html">登录</a>&nbsp; <a href="Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+            <span class="fl">
+            <c:if test="${sessionScope.loginUser==null}">
+        	    你好，请<a href="${ctx}/front/login.jsp">登录</a>&nbsp;
+                <a href="${ctx}/front/regist.jsp" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;
+                </c:if>
+                <c:if test="${sessionScope.loginUser!=null}">
+                    用户 <a href="#"style="color: cornflowerblue">【${sessionScope.loginUser.loginname}】</a> 登录&nbsp;|&nbsp;
+                </c:if>
+                <a href="#">我的订单</a>&nbsp;|
+                </span>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -462,10 +477,12 @@
         <!--End 商品分类详情 End-->
         <ul class="menu_r">
             <li><a href="Index.html">首页</a></li>
-            <c:forEach var="category" items="${categoryList}">
-                <li><a href="Index.html">${category.name}</a></li>
-            </c:forEach>
-
+            <li><a href="Index.html">${categoryList.get(0).name}</a></li>
+            <li><a href="Food.html">${categoryList.get(1).name}</a></li>
+            <li><a href="Fresh.html">${categoryList.get(2).name}</a></li>
+            <li><a href="HomeDecoration.html">${categoryList.get(3).name}</a></li>
+            <li><a href="SuitDress.html">${categoryList.get(4).name}</a></li>
+            <li><a href="MakeUp.html">${categoryList.get(5).name}</a></li>
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
